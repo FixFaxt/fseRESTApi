@@ -2,6 +2,7 @@ package main.fseRESTApi.api.model;
 
 import java.util.UUID;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,16 +15,24 @@ public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
+
+  @Column(nullable = false)
   private String name;
+
+  @Column(nullable = false)
   private String email;
+
+  @Column(nullable = false)
   private String password;
-  private String role; // "USER" oder "ADMIN"
+
+  @Column(nullable = false)
+  private UserRoles role;
 
   @SuppressWarnings("unused")
   private User() {
   }
 
-  public User(String name, String email, String password, String role) {
+  public User(String name, String email, String password, UserRoles role) {
     this.name = name;
     this.email = email;
     this.password = password;
@@ -54,11 +63,11 @@ public class User {
     this.password = password;
   }
 
-  public String getRole() {
+  public UserRoles getRole() {
     return this.role;
   }
 
-  public void setRole(String role) {
+  public void setRole(UserRoles role) {
     this.role = role;
   }
 }
