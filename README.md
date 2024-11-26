@@ -6,10 +6,10 @@ $ gradle bootRun
 
 ## Endpoints (API-Design)
 ### Benutzer
-- POST /api/users/register – Registrierung eines Benutzers.
-- POST /api/users/login – Login und JWT-Generierung.
-- GET /api/users/{id} – Benutzerdetails abrufen (nur Admin oder eigener Benutzer).
-- DELETE /api/users/{id} – Benutzer löschen (nur Admin).
+- POST /api/register – Register a new User
+- POST /api/admin/register - Register a new admin User
+- GET /api/user/{id} – Retrieve user details
+- DELETE /api/admin/users/{id} – Delete User
 
 ### Räume
 - GET /api/rooms – Liste aller Räume mit optionalen Filtern (Verfügbarkeit, Ausstattung, Kapazität).
@@ -24,3 +24,13 @@ $ gradle bootRun
 - PUT /api/bookings/{id} – Buchung bearbeiten (z. B. Zeit ändern, falls verfügbar).
 - DELETE /api/bookings/{id} – Buchung stornieren.
 - GET /api/bookings/room/{roomId} – Alle Buchungen für einen Raum. 
+
+## Authorization with Postman
+### No current user
+- Use "No Auth" option in "Authorization"-Tab
+- POST /api/register - Body with user data
+
+### With existing user
+- Use "Basic Auth" option in "Authorization"-Tab
+- Enter Username (Email) and Password for current user
+- Depending on the role you will have access to different endpoints

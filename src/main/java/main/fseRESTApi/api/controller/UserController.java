@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import main.fseRESTApi.api.model.User;
+import main.fseRESTApi.api.model.ValidatePasswordDto;
 import main.fseRESTApi.api.service.UserService;
 
 @RestController
@@ -24,7 +25,7 @@ public class UserController {
     this.userService = userService;
   }
 
-  @PostMapping("/user")
+  @PostMapping("/register")
   public ResponseEntity<?> createNewUser(@RequestBody User user) {
     if (user.getName() == null || user.getName().trim().isEmpty()) {
       return ResponseEntity.badRequest().body("Name cannot be empty");
@@ -47,12 +48,18 @@ public class UserController {
       return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
 
     } catch (Exception ex) {
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); // 500 Internal Server Error
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
   }
 
-  @GetMapping("/user")
+  @GetMapping("/admin/allUsers")
   public Iterable<User> getUsers() {
     return this.userService.getUsers();
+  }
+
+  // Purely for Testing User password auth
+  @PostMapping("/auth/validate")
+  public boolean validatePassword(@RequestBody ValidatePasswordDto validatePasswordDto) {
+    return this.userService.validatePassword(validatePasswordDto);
   }
 }
