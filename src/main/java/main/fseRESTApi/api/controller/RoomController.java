@@ -1,7 +1,6 @@
 package main.fseRESTApi.api.controller;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -39,13 +39,14 @@ public class RoomController {
     return this.roomService.getAllRooms();
   }
 
-  @GetMapping("/{name}")
-  public Room getRoomByName(@PathVariable("name") String roomName) {
-    Optional<Room> room = this.roomService.getRoomByName(roomName);
-    if (!room.isPresent()) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Room was not found");
+  @GetMapping("/room")
+  public Room getRoomByName(@RequestParam(required = false) String name, @RequestParam(required = false) UUID id) {
+    if (name == null && id == null) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+          "Either 'name' or 'id' query parameter must be provided");
     }
-    return room.get();
+
+    return roomService.getRoom(name, id);
   }
 
   @PutMapping("/{id}")

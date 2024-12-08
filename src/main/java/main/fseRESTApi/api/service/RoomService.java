@@ -30,54 +30,53 @@ public class RoomService {
     return this.roomRepository.findAll();
   }
 
-  public Optional<Room> getRoomByName(String roomName) {
-    return this.roomRepository.findByName(roomName);
-  }
+  public Room getRoom(String name, UUID id) {
+    Optional<Room> room;
 
-  public Optional<Room> getRoomById(UUID roomId) {
-    return this.roomRepository.findById(roomId);
+    if (name != null && id != null) {
+      // Prioritize search by id
+      room = this.roomRepository.findById(id);
+    } else if (name != null) {
+      // Search by name only
+      room = this.roomRepository.findByName(name);
+    } else {
+      // Search by id only
+      room = this.roomRepository.findById(id);
+    }
+
+    return room.orElseThrow(
+        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Room not found with the given parameters"));
   }
 
   public Room updateRoom(UUID roomId, Room newRoom) {
-    Optional<Room> existingRoom = this.getRoomById(roomId);
+    Room room = this.roomRepository.findById(roomId).orElseThrow(
+        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Room with ID " + roomId + " not found"));
 
-    if (existingRoom.isPresent()) {
-      Room room = existingRoom.get();
+    room.setName(newRoom.getName());
+    room.setCapacity(newRoom.getCapacity());
 
-      room.setName(newRoom.getName());
-      room.setCapacity(newRoom.getCapacity());
+    return this.roomRepository.save(room);
 
-      return this.roomRepository.save(room);
-    } else {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Room was not found");
-    }
   }
 
   public Room updateRoomPartial(UUID roomId, RoomUpdateDto roomUpdateDto) {
-    Optional<Room> existingRoom = this.getRoomById(roomId);
+    Room room = this.roomRepository.findById(roomId).orElseThrow(
+        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Room with ID " + roomId + " not found"));
 
-    if (existingRoom.isPresent()) {
-      Room room = existingRoom.get();
-
-      if (roomUpdateDto.getName() != null) {
-        room.setName(roomUpdateDto.getName());
-      }
-
-      if (roomUpdateDto.getCapacity() != null) {
-        room.setCapacity(roomUpdateDto.getCapacity());
-      }
-
-      return this.roomRepository.save(room);
-    } else {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Room was not found");
+    if (roomUpdateDto.getName() != null) {
+      room.setName(roomUpdateDto.getName());
     }
+    if (roomUpdateDto.getCapacity() != null) {
+      room.setCapacity(roomUpdateDto.getCapacity());
+    }
+
+    return this.roomRepository.save(room);
+
   }
 
   public void deleteRoom(UUID id) {
-    Optional<Room> existingRoom = this.getRoomById(id);
-    if (existingRoom.isEmpty()) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Room with ID " + id + " not found");
-    }
+    this.roomRepository.findById(id).orElseThrow(
+        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Room with ID " + id + " not found"));
 
     try {
       this.roomRepository.deleteById(id);
