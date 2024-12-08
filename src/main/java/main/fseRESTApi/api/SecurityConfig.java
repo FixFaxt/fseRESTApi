@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -31,12 +30,8 @@ public class SecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
         .csrf(csrf -> csrf.disable())
-        .authorizeHttpRequests(authz -> authz
-            .requestMatchers("/api/register/**").permitAll()
-            .requestMatchers("/api/admin/**", "/api/auth/**").hasAnyRole("ADMIN")
-            .requestMatchers("/api/user/**", "/api/bookings/**", "/api/rooms/**").hasAnyRole("USER", "ADMIN")
-            .anyRequest().authenticated())
-        .httpBasic(Customizer.withDefaults());
+        .authorizeHttpRequests(authz -> authz.anyRequest().permitAll())
+        .httpBasic(basic -> basic.disable());
 
     return http.build();
   }
