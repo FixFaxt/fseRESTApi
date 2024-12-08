@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -60,5 +61,11 @@ public class RoomController {
 
     Room updatedRoom = roomService.updateRoomPartial(id, roomUpdateDto);
     return ResponseEntity.ok(updatedRoom);
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> deleteRoom(@PathVariable("id") UUID id) {
+    this.roomService.deleteRoom(id);
+    return ResponseEntity.noContent().build();
   }
 }

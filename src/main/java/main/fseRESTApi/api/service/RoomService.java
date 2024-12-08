@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -69,6 +70,22 @@ public class RoomService {
       return this.roomRepository.save(room);
     } else {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Room was not found");
+    }
+  }
+
+  public void deleteRoom(UUID id) {
+    Optional<Room> existingRoom = this.getRoomById(id);
+    if (existingRoom.isEmpty()) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Room with ID " + id + " not found");
+    }
+
+    try {
+      this.roomRepository.deleteById(id);
+    } catch (DataAccessException ex) {
+      // Handle db related errors
+      throw new ResponseStatusException(
+          HttpStatus.INTERNAL_SERVER_ERROR,
+          "Database error occurred while deleting the room");
     }
   }
 }
