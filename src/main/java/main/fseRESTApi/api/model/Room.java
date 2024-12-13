@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "rooms")
 public class Room {
@@ -21,6 +23,7 @@ public class Room {
   private Integer capacity;
 
   @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonManagedReference
   private List<Booking> bookings = new ArrayList<>();;
 
   public Room() {

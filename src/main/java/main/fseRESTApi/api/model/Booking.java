@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "bookings")
 public class Booking {
@@ -23,6 +25,7 @@ public class Booking {
 
   @ManyToOne
   @JoinColumn(name = "room_name", referencedColumnName = "name", nullable = false)
+  @JsonBackReference
   private Room room;
 
   public Booking() {
