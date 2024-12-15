@@ -35,9 +35,7 @@ public class BookingController {
 
   @GetMapping("/{id}")
   public Booking getBookingById(@PathVariable("id") UUID id) {
-    Booking booking = this.bookingService.getBookingById(id);
-    System.out.println(booking.toString());
-    return booking;
+    return this.bookingService.getBookingById(id);
   }
 
   @PutMapping("/{id}")
