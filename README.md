@@ -23,6 +23,15 @@ $ gradle test --tests "RoomServiceTest"
 $ gradle test --tests "RoomServiceTest"
 ```
 
+## Dependencies
+- org.springframework.boot:spring-boot-starter-web
+- org.springframework.boot:spring-boot-starter-data-jpa
+- org.springframework.boot:spring-boot-starter-security
+- org.springframework.boot:spring-boot-starter-validation
+- org.postgresql:postgresql
+- org.springframework.boot:spring-boot-starter-test
+- org.junit.platform:junit-platform-launcher
+
 ## Endpoints
 
 ### Rooms
