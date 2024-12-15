@@ -22,11 +22,12 @@ public interface BookingRepository extends JpaRepository<Booking, UUID> {
 
   Optional<Booking> findByIdAndRoom(UUID id, Room room);
 
-  @Query("SELECT COUNT(b) > 0 FROM Booking b " +
-      "WHERE b.room.id = :roomId " +
-      "AND b.startTime < :endTime " +
-      "AND b.endTime > :startTime")
-  boolean existsOverlappingBooking(@Param("roomId") UUID roomId,
+  @Query("SELECT CASE WHEN COUNT(b) > 0 THEN TRUE ELSE FALSE END FROM Booking b " +
+      "WHERE b.room.name = :roomName " +
+      "AND NOT (:startTime >= b.endTime OR :endTime <= b.startTime)" +
+      "AND (:excludeId IS NULL OR b.id <> :excludeId)")
+  boolean existsOverlappingBooking(@Param("roomName") String roomName,
       @Param("startTime") LocalDateTime startTime,
-      @Param("endTime") LocalDateTime endTime);
+      @Param("endTime") LocalDateTime endTime,
+      @Param("excludeId") UUID excludeId);
 }

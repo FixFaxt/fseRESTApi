@@ -1,6 +1,7 @@
 package main.fseRESTApi.api.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,5 +30,18 @@ public class BookingController {
   @GetMapping()
   public List<Booking> getAllBookings() {
     return this.bookingService.getAllBookings();
+  }
+
+  @GetMapping("/{id}")
+  public Booking getBookingById(@PathVariable("id") UUID id) {
+    Booking booking = this.bookingService.getBookingById(id);
+    System.out.println(booking.toString());
+    return booking;
+  }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<Booking> updateBooking(@PathVariable("id") UUID id, @RequestBody Booking booking) {
+    Booking updatedBooking = this.bookingService.updateBooking(id, booking);
+    return ResponseEntity.ok(updatedBooking);
   }
 }

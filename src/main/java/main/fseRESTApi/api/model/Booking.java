@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "bookings")
@@ -29,6 +30,11 @@ public class Booking {
   private Room room;
 
   public Booking() {
+  }
+
+  @JsonProperty("roomName")
+  public String getRoomName() {
+    return room != null ? room.getName() : null;
   }
 
   public UUID getId() {
@@ -78,6 +84,7 @@ public class Booking {
         ", startTime=" + startTime +
         ", endTime=" + endTime +
         ", email=" + email +
+        ", room=" + room +
         '}';
   }
 }
