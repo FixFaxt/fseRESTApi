@@ -58,4 +58,9 @@ public class BookingController {
     this.bookingService.deleteBooking(id);
     return ResponseEntity.noContent().build();
   }
+
+  @GetMapping("/room/{roomName}")
+  public List<Booking> getBookingsByRoomName(@PathVariable("roomName") String roomName) {
+    return this.bookingService.getBookingsByRoomName(roomName);
+  }
 }

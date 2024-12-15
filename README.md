@@ -6,16 +6,22 @@ $ gradle bootRun
 
 ## Endpoints (API-Design)
 
-### Räume
-- GET /api/rooms – Liste aller Räume mit optionalen Filtern (Verfügbarkeit, Ausstattung, Kapazität)
-- GET /api/rooms/room – Details eines bestimmten Raums. (Query Parameter: name, id)
-- POST /api/rooms – Neuen Raum erstellen
-- PUT /api/rooms/{id} – Raumdaten aktualisieren
-- DELETE /api/rooms/{id} – Raum löschen
+### Rooms
+- GET /api/rooms – List of all rooms
+- GET /api/rooms/room – Get details of a specific room
+  Query Parameters:
+  - name (String, optional): Name of the room to retrieve
+  - id (UUID, optional): ID of the room to retrieve
+- POST /api/rooms – Create a new room
+- PUT /api/rooms/{id} – Update room data
+- PATCH /api/rooms/{id} – Update room data (partially)
+- DELETE /api/rooms/{id} – Delete room
 
-### Buchungen
-- GET /api/bookings – Liste aller Buchungen
-- POST /api/bookings – Neue Buchung erstellen
-- PUT /api/bookings/{id} – Buchung bearbeiten (z. B. Zeit ändern, falls verfügbar)
-- DELETE /api/bookings/{id} – Buchung stornieren
-- GET /api/bookings/room/{roomId} – Alle Buchungen für einen Raum.
+### Bookings
+- GET /api/bookings – List of all bookings
+- POST /api/bookings – Create new booking
+- GET /api/bookings/{id} – Get details of specific booking
+- PUT /api/bookings/{id} – Update booking data
+- PATCH /api/bookings/{id} – Update booking data (partially)
+- DELETE /api/bookings/{id} – Delete booking
+- GET /api/bookings/room/{roomId} – Get all bookings for a room

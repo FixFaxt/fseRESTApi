@@ -66,8 +66,8 @@ public class BookingService {
     return booking;
   }
 
-  public List<Booking> getBookingsByEmail(String email) {
-    return bookingRepository.findByEmail(email);
+  public List<Booking> getBookingsByRoomName(String roomName) {
+    return this.bookingRepository.findByRoomName(roomName);
   }
 
   public Booking updateBooking(UUID id, Booking newBooking) {
