@@ -5,6 +5,12 @@ Spring Backend für ein Raumbuchungstool
 Fuchs & Laugsch
 
 ## App
+### Setup
+In application.properties add:
+- DB Url
+- DB Username
+- DB Password
+
 ### Running the app
 ```bash
 $ gradle bootRun
