@@ -1,6 +1,8 @@
 package main.fseRESTApi.api.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +19,11 @@ public class Room {
   private UUID id;
 
   @Column(nullable = false, unique = true)
+  @NotBlank
   private String name;
 
   @Column(nullable = false)
+  @NotNull
   private Integer capacity;
 
   @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)

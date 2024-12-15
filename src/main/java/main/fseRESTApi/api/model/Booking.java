@@ -1,6 +1,9 @@
 package main.fseRESTApi.api.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -16,17 +19,21 @@ public class Booking {
   private UUID id;
 
   @Column(nullable = false)
+  @NotNull(message = "Start time must not be null")
   private LocalDateTime startTime;
 
   @Column(nullable = false)
+  @NotNull(message = "End time must not be null")
   private LocalDateTime endTime;
 
   @Column(nullable = false)
+  @NotBlank(message = "Email name must not be empty")
   private String email;
 
   @ManyToOne
   @JoinColumn(name = "room_name", referencedColumnName = "name", nullable = false)
   @JsonBackReference
+  @NotNull(message = "Room must not be null")
   private Room room;
 
   public Booking() {

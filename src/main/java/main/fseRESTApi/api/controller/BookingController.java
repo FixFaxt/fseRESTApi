@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
 import main.fseRESTApi.api.model.Booking;
 import main.fseRESTApi.api.model.BookingUpdateDto;
 import main.fseRESTApi.api.service.BookingService;
@@ -19,7 +20,7 @@ public class BookingController {
   private BookingService bookingService;
 
   @PostMapping()
-  public ResponseEntity<?> createBooking(@RequestBody Booking booking) {
+  public ResponseEntity<?> createBooking(@Valid @RequestBody Booking booking) {
     try {
       Booking newBooking = bookingService.createBooking(booking);
       return ResponseEntity.status(HttpStatus.CREATED).body(newBooking);
@@ -39,14 +40,14 @@ public class BookingController {
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Booking> updateBooking(@PathVariable("id") UUID id, @RequestBody Booking booking) {
+  public ResponseEntity<Booking> updateBooking(@PathVariable("id") UUID id, @Valid @RequestBody Booking booking) {
     Booking updatedBooking = this.bookingService.updateBooking(id, booking);
     return ResponseEntity.ok(updatedBooking);
   }
 
   @PatchMapping("/{id}")
   public ResponseEntity<Booking> updateBookingPartial(@PathVariable("id") UUID id,
-      @RequestBody BookingUpdateDto bookingUpdateDto) {
+      @Valid @RequestBody BookingUpdateDto bookingUpdateDto) {
     Booking updatedBooking = this.bookingService.updateBookingPartial(id, bookingUpdateDto);
     return ResponseEntity.ok(updatedBooking);
   }

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import jakarta.validation.Valid;
 import main.fseRESTApi.api.model.Room;
 import main.fseRESTApi.api.model.RoomUpdateDto;
 import main.fseRESTApi.api.service.RoomService;
@@ -20,7 +21,7 @@ public class RoomController {
   private RoomService roomService;
 
   @PostMapping()
-  public Room createNewRoom(@RequestBody Room room) {
+  public Room createNewRoom(@Valid @RequestBody Room room) {
     Room newRoom = this.roomService.createRoom(room);
     return newRoom;
   }
@@ -41,7 +42,7 @@ public class RoomController {
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Room> updateRoom(@PathVariable("id") UUID id, @RequestBody Room room) {
+  public ResponseEntity<Room> updateRoom(@PathVariable("id") UUID id, @Valid @RequestBody Room room) {
     Room updatedRoom = this.roomService.updateRoom(id, room);
     return ResponseEntity.ok(updatedRoom);
   }
@@ -49,7 +50,7 @@ public class RoomController {
   @PatchMapping("/{id}")
   public ResponseEntity<Room> updateRoomPartial(
       @PathVariable("id") UUID id,
-      @RequestBody RoomUpdateDto roomUpdateDto) {
+      @Valid @RequestBody RoomUpdateDto roomUpdateDto) {
 
     Room updatedRoom = roomService.updateRoomPartial(id, roomUpdateDto);
     return ResponseEntity.ok(updatedRoom);
