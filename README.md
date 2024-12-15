@@ -1,15 +1,19 @@
-# fseRESTApi
-### Running the app
+# Fortgeschrittene Softwareentwicklung
+### Projekt: 
+Spring Backend für ein Raumbuchungstool
+### Gruppe: 
+Fuchs & Laugsch
+
+## Running the app
 ```bash
 $ gradle bootRun
 ```
 
-## Endpoints (API-Design)
+## Endpoints
 
 ### Rooms
 - GET /api/rooms – List of all rooms
-- GET /api/rooms/room – Get details of a specific room
-  Query Parameters:
+- GET /api/rooms/room – Get details of a specific room (with query params)
   - name (String, optional): Name of the room to retrieve
   - id (UUID, optional): ID of the room to retrieve
 - POST /api/rooms – Create a new room
