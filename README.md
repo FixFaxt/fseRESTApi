@@ -4,9 +4,23 @@ Spring Backend für ein Raumbuchungstool
 ### Gruppe: 
 Fuchs & Laugsch
 
-## Running the app
+## App
+### Running the app
 ```bash
 $ gradle bootRun
+```
+
+### Run app tests
+```bash
+$ gradle test
+```
+#### Run specific tests
+```bash
+$ gradle test --tests "RoomServiceTest"
+```
+
+```bash
+$ gradle test --tests "RoomServiceTest"
 ```
 
 ## Endpoints
